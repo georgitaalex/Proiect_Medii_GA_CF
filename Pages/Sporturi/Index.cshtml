@@ -1,0 +1,86 @@
+﻿@page
+@model WEB.Pages.Sporturi.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+    <form asp-page="./Index" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Find by Sport / InstructorID:
+                <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+                <input type="submit" value="Search" class="btn btn-primary" /> |
+                <a asp-page="./Index">Back to full List</a>
+            </p>
+        </div>
+    </form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SportSortare">
+                @Html.DisplayNameFor(model => model.Sport[0].NumeSport)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.InstructorSortare">
+                @Html.DisplayNameFor(model => model.Sport[0].InstructorID)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sport[0].Pret)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sport[0].Locatie.NumeSala)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sport[0].Durata)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sport[0].CategoriiSport)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SportD.Sporturi) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeSport)
+            </td> <td>
+                @Html.DisplayFor(modelItem => item.InstructorID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pret)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Locatie.NumeSala)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Durata)
+            </td>
+                <td>
+                    @{
+                        foreach (var category in item.CategoriiSport)
+                        {
+                            @category.Categorie.ID @: @category.Categorie.NumeCategorie <br />
+                        }
+                    }
+                            </td>
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

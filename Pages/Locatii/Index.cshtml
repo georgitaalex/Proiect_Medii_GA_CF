@@ -1,0 +1,85 @@
+﻿@page
+@model WEB.Pages.Locatii.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Locatie[0].NumeSala)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Locatie[0].Adresa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Locatie[0].Oras)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.LocatieData.Locatii) {
+            string selectedRow = "";
+            if (item.ID == Model.LocatieID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeSala)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Oras)
+            </td>
+            <td>
+                <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@if (Model.LocatieData.Sporturi != null)
+{
+    <h3>Sporturi Edited by Selected Locatie</h3>
+    <table class="table">
+
+        @foreach (var item in Model.LocatieData.Locatii)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.LocatieID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
+                <td>
+                    @{
+                        foreach (var b in item.Sporturi)
+                        {
+
+                            @b.NumeSport @: @b.Instructor.FullName
+
+                            <br />
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
